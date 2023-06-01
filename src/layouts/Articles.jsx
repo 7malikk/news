@@ -1,8 +1,51 @@
 import { BiChevronLeftCircle, BiChevronRightCircle } from 'react-icons/bi';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+import { Link } from 'react-router-dom';
+import { CgSpinnerTwo } from 'react-icons/cg';
 
 const Articles = () => {
+  const { category } = useParams();
+  const {
+    general,
+    sports,
+    entertainment,
+    health,
+    business,
+    science,
+    tech,
+    isLoading,
+  } = useSelector((store) => store.articles);
+  const cat =
+    category === 'sports'
+      ? sports
+      : category === 'entertainment'
+      ? entertainment
+      : category === 'health'
+      ? health
+      : category === 'business'
+      ? business
+      : category === 'science'
+      ? science
+      : category === 'tech'
+      ? tech
+      : general;
+  const first = cat[0];
+  const others = cat.slice(1, 10);
+
+  const fallBackBcg =
+    'https://images.unsplash.com/photo-1624383045192-cf512eb9d78c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80';
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-[60vh] flex justify-center items-center">
+        <CgSpinnerTwo className="animate-spin w-10 h-10" />
+      </div>
+    );
+  }
   return (
-    <section>
+    <section className=" px-2 md:px-8 pb-2 md:pb-8">
       <div className="flex flex-col lg:flex-row-reverse lg:justify-between p-2 md:p-8">
         <nav className="flex justify-end items-center space-x-4">
           <form>
@@ -26,52 +69,41 @@ const Articles = () => {
           </div>
         </nav>
         <hr />
-        <h1>Category: Business</h1>
+        <h1 className="capitalize text-xl md:text-3xl font-semibold ">
+          {category == 'tech' ? 'Technology' : category}
+        </h1>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-2 md:p-8">
-        <div className="col-span-1 md:col-span-2 bg-orange-400 h-80 flex flex-col justify-between ">
-          <p className=" text-center">Title: Lorem ipsum dolor sit amet.</p>
-          <img src="" alt="a1" />
-          <p>
-            description: Lorem ipsum dolor sit, amet consectetur adipisicing
-            elit. Itaque tempora fugit minima accusamus, quod veniam!
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 ">
+        <Link
+          title={first?.title}
+          className="col-span-1 lg:col-span-2 flex flex-col  space-y-5 hover:underline"
+          to={`/article/${first?.title}`}>
+          <img
+            src={first?.urlToImage || fallBackBcg}
+            alt={first?.title}
+            // className="h-fit w-fit"
+          />
+          <p className=" text-left font-bold text-xl md:text-3xl">
+            {first?.title}
           </p>
-        </div>
-        <div className="bg-green-500 h-80 flex flex-col justify-between">
-          <img src="" alt="a2" />
-          <p>Title: Lorem ipsum dolor sit amet.</p>
-        </div>
-        <div className="bg-red-500  h-80 flex flex-col justify-between">
-          {' '}
-          <img src="" alt="a3" />
-          <p>Title: Lorem ipsum dolor sit amet.</p>
-        </div>
-        <div className="bg-purple-500  h-80 flex flex-col justify-between">
-          <img src="" alt="a4" />
-          <p>Title: Lorem ipsum dolor sit amet.</p>
-        </div>
-        <div className="bg-amber-500  h-80 flex flex-col justify-between">
-          <img src="" alt="a5" />
-          <p>Title: Lorem ipsum dolor sit amet.</p>
-        </div>
-        <div className="bg-blue-500  h-36 flex justify-start items-center">
-          <p>Title: Lorem ipsum dolor sit amet.</p>
-        </div>
-        <div className="bg-violet-500  h-36  flex justify-start items-center">
-          {' '}
-          <p>Title: Lorem ipsum dolor sit amet.</p>
-        </div>
-        <div className="bg-slate-400  h-36  flex justify-start items-center">
-          <p>Title: Lorem ipsum dolor sit amet.</p>
-        </div>
-        <div className="bg-gray-500  h-36  flex justify-start items-center">
-          {' '}
-          <p>Title: Lorem ipsum dolor sit amet.</p>
-        </div>
-        <div className="bg-yellow-500  h-36  flex justify-start items-center">
-          {' '}
-          <p>Title: Lorem ipsum dolor sit amet.</p>
-        </div>
+        </Link>
+        {others.map((item, idx) => {
+          return (
+            <Link
+              className="hover:text-black  hover:underline col-span-1 flex flex-col items-center space-y-5 text-gray-500 group"
+              key={idx}
+              to={`/article/${item?.title}`}>
+              <img
+                src={item?.urlToImage || fallBackBcg}
+                alt={item?.title}
+                // className="h-fit w-fit"
+              />
+              <p className=" text-left font-bold text-xl md:text-3xl">
+                {item?.title}
+              </p>{' '}
+            </Link>
+          );
+        })}
       </div>
     </section>
   );

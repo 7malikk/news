@@ -1,8 +1,8 @@
 const Newsletter = () => {
   return (
-    <section className="p-2 md:p-8">
-      <div className="flex flex-col md:flex-row items-center  justify-center md:justify-between">
-        <h4 className="capitalize text-2xl font-bold text-center md:text-left">
+    <section className="p-2 md:p-8 bg-gray-50">
+      <div className="flex flex-col md:flex-row items-center  justify-center md:justify-between md:items-start">
+        <h4 className="capitalize text-2xl font-bold text-center md:text-left text-red-500">
           Sign up for our newsletter
         </h4>
         <p className="font-semibold md:w-2/3 text-center md:text-left">
@@ -22,7 +22,7 @@ const Newsletter = () => {
         <button
           type="submit"
           className="group relative h-12 w-48 overflow-hidden rounded-lg bg-white text-lg shadow">
-          <div className="absolute inset-0 w-3 bg-amber-400 transition-all duration-[250ms] ease-in-out group-hover:w-full"></div>
+          <div className="absolute inset-0 w-3 bg-red-500 transition-all duration-[250ms] ease-in-out group-hover:w-full"></div>
           <span className="relative text-black group-hover:text-white">
             Subscribe Now
           </span>

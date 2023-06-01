@@ -15,6 +15,7 @@ const sportsURL =
   'https://newsapi.org/v2/top-headlines?category=sports&language=en&pageSize=100';
 const techURL =
   'https://newsapi.org/v2/top-headlines?category=technology&language=en&pageSize=100';
+const searchURL = 'https://newsapi.org/v2/everything?q=';
 
 const initialState = {
   allArticles: JSON.parse(localStorage.getItem('top10')),
@@ -25,6 +26,7 @@ const initialState = {
   entertainment: [],
   health: [],
   sports: [],
+  searchResult: [],
   isLoading: true,
   isError: false,
 };
@@ -102,6 +104,20 @@ export const getHealth = createAsyncThunk(
   async (thunkAPI) => {
     try {
       const resp = await axios(healthURL, {
+        headers: { Authorization: `Bearer ${import.meta.env.VITE_API_KEY}` },
+      });
+      return resp.data;
+    } catch (error) {
+      console.log(error.response.data);
+      return thunkAPI.rejectiWithValue('somehting went wrong');
+    }
+  }
+);
+export const search = createAsyncThunk(
+  'articles/search',
+  async (keyword, thunkAPI) => {
+    try {
+      const resp = await axios(searchURL + keyword, {
         headers: { Authorization: `Bearer ${import.meta.env.VITE_API_KEY}` },
       });
       return resp.data;
@@ -212,6 +228,19 @@ const articlesSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(getEnt.rejected, (state, action) => {
+        console.log(action);
+        state.isLoading = false;
+        state.isError = true;
+      });
+    builder
+      .addCase(search.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(search.fulfilled, (state, action) => {
+        state.searchResult = action.payload.articles;
+        state.isLoading = false;
+      })
+      .addCase(search.rejected, (state, action) => {
         console.log(action);
         state.isLoading = false;
         state.isError = true;

@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { CgSpinnerTwo } from 'react-icons/cg';
+import { BsArrowRight } from 'react-icons/bs';
 
 const Health = () => {
   const { health, isLoading } = useSelector((store) => store.articles);
@@ -21,7 +22,12 @@ const Health = () => {
     <section>
       <div className="p-2 md:p-8 space-y-3">
         <hr />
-        <h1 className="text-xl md:text-3xl font-semibold ">Health</h1>
+        <Link
+          className="group hover:text-red-500 flex w-fit items-center space-x-3 group"
+          to={'/health'}>
+          <h1 className="text-xl md:text-3xl font-semibold ">Health</h1>
+          <BsArrowRight className="w-6 h-6 md:w-7 md:h-7 text-red-500 transition delay-150 duration-300 ease-in-out opacity-0 group-hover:opacity-100 group-hover:translate-x-6" />
+        </Link>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 ">
           <Link
             title={first?.title}
@@ -30,7 +36,7 @@ const Health = () => {
             <img
               src={first?.urlToImage || fallBackBcg}
               alt={first?.title}
-              // className="h-fit w-fit"
+              className="h-fit w-fit"
             />
             <p className=" text-left font-bold text-xl md:text-3xl">
               {first?.title}

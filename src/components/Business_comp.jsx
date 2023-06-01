@@ -1,7 +1,8 @@
-import { BiChevronLeftCircle, BiChevronRightCircle } from 'react-icons/bi';
+// import { BiChevronLeftCircle, BiChevronRightCircle } from 'react-icons/bi';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { CgSpinnerTwo } from 'react-icons/cg';
+import { BsArrowRight } from 'react-icons/bs';
 
 const HomeArticles = () => {
   const { business, isLoading } = useSelector((store) => store.articles);
@@ -21,7 +22,7 @@ const HomeArticles = () => {
   return (
     <section>
       <div className="flex flex-col lg:flex-row-reverse lg:justify-between p-2 md:p-8">
-        <nav className="flex justify-end items-center space-x-4">
+        {/* <nav className="flex justify-end items-center space-x-4">
           <form>
             <select name="sources" id="sources" placeholder="CNN">
               <option value="all">All</option>
@@ -41,11 +42,16 @@ const HomeArticles = () => {
               <BiChevronRightCircle className=" w-5 h-5" />
             </button>
           </div>
-        </nav>
+        </nav> */}
       </div>
       <div className="p-2 md:p-8 space-y-3">
         <hr />
-        <h1 className="text-xl md:text-3xl font-semibold ">Business</h1>
+        <Link
+          className="group hover:text-red-500 flex w-fit items-center space-x-3 group"
+          to={'/business'}>
+          <h1 className="text-xl md:text-3xl font-semibold ">Business</h1>
+          <BsArrowRight className="w-6 h-6 md:w-7 md:h-7 text-red-500 transition delay-150 duration-300 ease-in-out opacity-0 group-hover:opacity-100 group-hover:translate-x-6" />
+        </Link>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 ">
           <Link
             title={first?.title}

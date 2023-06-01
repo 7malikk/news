@@ -1,7 +1,7 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import { BsArrowRight } from 'react-icons/bs';
 import { CgSpinnerTwo } from 'react-icons/cg';
 
 const Ent = () => {
@@ -19,10 +19,14 @@ const Ent = () => {
     );
   }
   return (
-    <div className="p-2 md:p-8  space-y-3">
+    <div className="px-2 md:px-8  space-y-3 ">
       <hr />
-      <h1 className="text-xl md:text-3xl font-semibold ">Entertainment</h1>
-
+      <Link
+        className="group hover:text-red-500 flex w-fit items-center space-x-3 group"
+        to={'/entertainment'}>
+        <h1 className="text-xl md:text-3xl font-semibold ">Entertainment</h1>
+        <BsArrowRight className="w-6 h-6 md:w-7 md:h-7 text-red-500 transition delay-150 duration-300 ease-in-out opacity-0 group-hover:opacity-100 group-hover:translate-x-6" />
+      </Link>
       <div className=" space-y-3">
         <Link
           title={first?.title}

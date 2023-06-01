@@ -31,15 +31,12 @@ const Hero = () => {
   }
 
   return (
-    <section className="mb-6">
-      <h4 className="text-xl md:text-3xl font-semibold p-2 md:px-8">
-        Top 5 Headlines - General
-      </h4>
+    <section>
       <Slider {...settings}>
         {topFive.map((article, idx) => {
           return (
             <Link key={idx} to={`/article/${article.title}`}>
-              <div className=" h-[75vh] ">
+              <div className=" h-[75vh]  ">
                 <div
                   style={{
                     backgroundImage: `url("${
