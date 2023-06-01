@@ -1,4 +1,9 @@
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 const HomeVideos = () => {
+  const { allArticles, isLoading } = useSelector((store) => store.articles);
+  console.log(allArticles);
   return (
     <section className="p-2 md:p-8">
       <hr />
