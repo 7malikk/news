@@ -4,14 +4,14 @@ import { CgSpinnerTwo } from 'react-icons/cg';
 import { BsArrowRight } from 'react-icons/bs';
 
 const Tech = () => {
-  const { tech, isLoading } = useSelector((store) => store.articles);
-  const first = tech[0];
-  const some = tech.slice(10, 15);
+  const { tech, isTechLoading } = useSelector((store) => store.articles);
+  const first = !isTechLoading && tech[0][0];
+  const some = !isTechLoading && tech[0].slice(1, 7);
 
   const fallBackBcg =
     'https://images.unsplash.com/photo-1624383045192-cf512eb9d78c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80';
 
-  if (isLoading) {
+  if (isTechLoading) {
     return (
       <div className="w-full h-[60vh] flex justify-center items-center">
         <CgSpinnerTwo className="animate-spin w-10 h-10" />
@@ -21,7 +21,7 @@ const Tech = () => {
   return (
     <section>
       <div className="p-2 md:p-8 space-y-3">
-        <hr />
+        <hr className="hidden lg:block" />
         <Link
           className="group hover:text-red-500 flex w-fit items-center space-x-3 group"
           to={'/tech'}>

@@ -5,13 +5,15 @@ import { BsArrowRight } from 'react-icons/bs';
 import { CgSpinnerTwo } from 'react-icons/cg';
 
 const Ent = () => {
-  const { entertainment, isLoading } = useSelector((store) => store.articles);
-  const first = entertainment[0];
-  const some = entertainment.slice(10, 15);
+  const { entertainment, isEntLoading } = useSelector(
+    (store) => store.articles
+  );
+  const first = !isEntLoading && entertainment[0][0];
+  const some = !isEntLoading && entertainment[0].slice(1, 7);
   const fallBackBcg =
     'https://images.unsplash.com/photo-1624383045192-cf512eb9d78c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80';
 
-  if (isLoading) {
+  if (isEntLoading) {
     return (
       <div className="w-full h-[60vh] flex justify-center items-center">
         <CgSpinnerTwo className="animate-spin w-10 h-10" />
@@ -20,7 +22,7 @@ const Ent = () => {
   }
   return (
     <div className="px-2 md:px-8  space-y-3 ">
-      <hr />
+      <hr className="hidden lg:block" />
       <Link
         className="group hover:text-red-500 flex w-fit items-center space-x-3 group"
         to={'/entertainment'}>

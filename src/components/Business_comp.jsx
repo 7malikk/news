@@ -5,14 +5,17 @@ import { CgSpinnerTwo } from 'react-icons/cg';
 import { BsArrowRight } from 'react-icons/bs';
 
 const HomeArticles = () => {
-  const { business, isLoading } = useSelector((store) => store.articles);
-  const first = business[0];
-  const some = business.slice(10, 15);
+  const { business, isBusinessLoading } = useSelector(
+    (store) => store.articles
+  );
+
+  const first = !isBusinessLoading && business[0][0];
+  const some = !isBusinessLoading && business[0].slice(1, 7);
 
   const fallBackBcg =
     'https://images.unsplash.com/photo-1624383045192-cf512eb9d78c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80';
 
-  if (isLoading) {
+  if (isBusinessLoading) {
     return (
       <div className="w-full h-[60vh] flex justify-center items-center">
         <CgSpinnerTwo className="animate-spin w-10 h-10" />
@@ -21,31 +24,8 @@ const HomeArticles = () => {
   }
   return (
     <section>
-      <div className="flex flex-col lg:flex-row-reverse lg:justify-between p-2 md:p-8">
-        {/* <nav className="flex justify-end items-center space-x-4">
-          <form>
-            <select name="sources" id="sources" placeholder="CNN">
-              <option value="all">All</option>
-              <option value="CNN">CNN</option>
-              <option value="Youtube">Youtube</option>
-              <option value="BBC">BBC</option>
-              <option value="Aljazeerah">Aljazeerah</option>
-            </select>
-            <button type="submit">Filter</button>
-          </form>
-
-          <div className="flex space-x-5">
-            <button>
-              <BiChevronLeftCircle className=" w-5 h-5" />
-            </button>
-            <button>
-              <BiChevronRightCircle className=" w-5 h-5" />
-            </button>
-          </div>
-        </nav> */}
-      </div>
       <div className="p-2 md:p-8 space-y-3">
-        <hr />
+        <hr className="hidden lg:block" />
         <Link
           className="group hover:text-red-500 flex w-fit items-center space-x-3 group"
           to={'/business'}>

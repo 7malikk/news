@@ -10,6 +10,7 @@ import {
   getEnt,
   getHealth,
   getBusiness,
+  getSources,
 } from './features/articles/articles';
 import { useDispatch } from 'react-redux';
 
@@ -23,6 +24,7 @@ function App() {
     dispatch(getScience());
     dispatch(getSports());
     dispatch(getBusiness());
+    dispatch(getSources());
   }, []);
   return (
     <>

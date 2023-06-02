@@ -3,31 +3,72 @@ import { BiChevronLeftCircle, BiChevronRightCircle } from 'react-icons/bi';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { search } from '../features/articles/articles';
+import { getFromSource, search } from '../features/articles/articles';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { CgSpinnerTwo } from 'react-icons/cg';
 
 const Search = () => {
-  const { searchResult, isLoading } = useSelector((store) => store.articles);
+  const dispatch = useDispatch();
+  const { searchResult, isSearchLoading, sources } = useSelector(
+    (store) => store.articles
+  );
   const navigate = useNavigate();
   const { keyword } = useParams();
   const [mainKeyword, setMainKeyword] = useState('');
-  const dispatch = useDispatch();
-  const firstTen = searchResult.slice(0, 11);
+
+  const [page, setPage] = useState(0);
+  const [displayData, setDisplayData] = useState([]);
+  const [filter, setFilter] = useState('');
+
+  useEffect(() => {
+    if (isSearchLoading) return;
+    setDisplayData(searchResult[page]);
+  }, [page, isSearchLoading]);
+
+  const next = () => {
+    setPage((old) => {
+      let nextPage = old + 1;
+      if (nextPage > searchResult.length - 1) {
+        nextPage = 0;
+      }
+      return nextPage;
+    });
+  };
+  const prev = () => {
+    setPage((old) => {
+      let prevPage = old - 1;
+      if (prevPage < 0) {
+        prevPage = searchResult.length - 1;
+      }
+      return prevPage;
+    });
+  };
 
   const fallBackBcg =
-    'https://images.unsplash.com/photo-1624383045192-cf512eb9d78c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80';
-
+    'https://images.unsplash.com/photo-1586339949916-3e9457bef6d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80';
   useEffect(() => {
     setMainKeyword(keyword);
   }, [keyword]);
+  useEffect(() => {
+    dispatch(search(keyword));
+    navigate(`/search/${keyword}`);
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (mainKeyword) {
       dispatch(search(mainKeyword));
       navigate(`/search/${mainKeyword}`);
+    }
+  };
+  const handleFilter = (e) => {
+    e.preventDefault();
+    if (filter === 'false') {
+      dispatch(search(mainKeyword));
+      navigate(`/search/${mainKeyword}`);
+    } else {
+      dispatch(getFromSource(`${mainKeyword}&domains=${filter}`));
     }
   };
 
@@ -50,30 +91,42 @@ const Search = () => {
         {searchResult.length !== 0 && (
           <h1>
             showig results for{' '}
-            <span className="font-semibold text-lg">{mainKeyword}</span>
+            <span className="font-semibold text-lg">{keyword}</span>
           </h1>
         )}
-        <form className="hidden md:block">
-          <select name="sources" id="sources" placeholder="CNN">
-            <option value="all">All</option>
-            <option value="CNN">CNN</option>
-            <option value="Youtube">Youtube</option>
-            <option value="BBC">BBC</option>
-            <option value="Aljazeerah">Aljazeerah</option>
+        <form onSubmit={handleFilter} className="space-x-1  self-end">
+          <label htmlFor="sources" className="text-gray-400">
+            Filter source
+          </label>
+          <select
+            onChange={(e) => {
+              console.log(e.target.value);
+              setFilter(e.target.value);
+            }}
+            name="sources"
+            id="sources"
+            className="border rounded-md py-1 px-2 outline-none hover:border-red-500 transition duration-300 delay-150 ease-in-out">
+            <option value="false">All News App</option>
+            {sources.map((source, idx) => {
+              return (
+                <option key={idx} value={source.url}>
+                  {source.name}
+                </option>
+              );
+            })}
           </select>
           <button type="submit">Filter</button>
         </form>
       </div>
-      {isLoading ? (
+      {isSearchLoading ? (
         <div className="w-full h-[60vh] flex justify-center items-center">
           <CgSpinnerTwo className="animate-spin w-10 h-10" />
         </div>
       ) : searchResult.length === 0 ? (
         <div className="w-full h-[40vh] flex flex-col justify-center md:space-y-3">
           <p className="text-xl">
-            Your search for{' '}
-            <span className="font-semibold ">{mainKeyword}</span> did not match
-            any results.
+            Your search for <span className="font-semibold ">{keyword}</span>{' '}
+            did not match any results.
           </p>
           <div className=" md:space-y-2">
             <p className="font-semibold text-xl">A few suggestions:</p>
@@ -86,7 +139,7 @@ const Search = () => {
         </div>
       ) : (
         <div className="space-y-2">
-          {firstTen.map((item, idx) => {
+          {displayData?.map((item, idx) => {
             return (
               <div key={idx} className="space-y-2">
                 <hr />
@@ -118,11 +171,12 @@ const Search = () => {
       )}
 
       <div className="flex justify-center space-x-5">
-        <button>
-          <BiChevronLeftCircle className=" w-5 h-5 md:w-7 md:h-7" />
+        <button onClick={prev}>
+          <BiChevronLeftCircle className=" w-5 h-5" />
         </button>
-        <button>
-          <BiChevronRightCircle className=" w-5 h-5 md:w-7 md:h-7" />
+        <p>{`${page + 1} of ${searchResult.length}`}</p>
+        <button onClick={next}>
+          <BiChevronRightCircle className=" w-5 h-5" />
         </button>
       </div>
     </section>

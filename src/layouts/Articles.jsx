@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 
 import { Link } from 'react-router-dom';
 import { CgSpinnerTwo } from 'react-icons/cg';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 const Articles = () => {
   const { category } = useParams();
@@ -15,7 +17,12 @@ const Articles = () => {
     business,
     science,
     tech,
-    isLoading,
+    isHealthLoading,
+    isScienceLoading,
+    isEntLoading,
+    isSportsLoading,
+    isBusinessLoading,
+    isTechLoading,
   } = useSelector((store) => store.articles);
   const cat =
     category === 'sports'
@@ -31,13 +38,61 @@ const Articles = () => {
       : category === 'tech'
       ? tech
       : general;
-  const first = cat[0];
-  const others = cat.slice(1, 10);
+
+  const [page, setPage] = useState(0);
+  const [displayData, setDisplayData] = useState([]);
+
+  const first =
+    (!isHealthLoading ||
+      !isScienceLoading ||
+      !isEntLoading ||
+      !isSportsLoading ||
+      !isBusinessLoading ||
+      !isTechLoading) &&
+    displayData[0];
+  const others =
+    (!isHealthLoading ||
+      !isScienceLoading ||
+      !isEntLoading ||
+      !isSportsLoading ||
+      !isBusinessLoading ||
+      !isTechLoading) &&
+    displayData.slice(1, 10);
+
+  useEffect(() => {
+    setDisplayData(cat[page]);
+  }, [page, cat]);
+
+  const next = () => {
+    setPage((old) => {
+      let nextPage = old + 1;
+      if (nextPage > cat.length - 1) {
+        nextPage = 0;
+      }
+      return nextPage;
+    });
+  };
+  const prev = () => {
+    setPage((old) => {
+      let prevPage = old - 1;
+      if (prevPage < 0) {
+        prevPage = cat.length - 1;
+      }
+      return prevPage;
+    });
+  };
 
   const fallBackBcg =
     'https://images.unsplash.com/photo-1624383045192-cf512eb9d78c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80';
 
-  if (isLoading) {
+  if (
+    isHealthLoading ||
+    isScienceLoading ||
+    isEntLoading ||
+    isSportsLoading ||
+    isBusinessLoading ||
+    isTechLoading
+  ) {
     return (
       <div className="w-full h-[60vh] flex justify-center items-center">
         <CgSpinnerTwo className="animate-spin w-10 h-10" />
@@ -47,23 +102,13 @@ const Articles = () => {
   return (
     <section className=" px-2 md:px-8 pb-2 md:pb-8">
       <div className="flex flex-col lg:flex-row-reverse lg:justify-between p-2 md:p-8">
-        <nav className="flex justify-end items-center space-x-4">
-          <form>
-            <select name="sources" id="sources" placeholder="CNN">
-              <option value="all">All</option>
-              <option value="CNN">CNN</option>
-              <option value="Youtube">Youtube</option>
-              <option value="BBC">BBC</option>
-              <option value="Aljazeerah">Aljazeerah</option>
-            </select>
-            <button type="submit">Filter</button>
-          </form>
-
+        <nav className="flex flex-col m:flex-row md:justify-end md:items-center space-y-2 md:space-y-0 md:space-x-4">
           <div className="flex space-x-5">
-            <button>
+            <button onClick={prev}>
               <BiChevronLeftCircle className=" w-5 h-5" />
             </button>
-            <button>
+            <p>{`${page + 1} of ${cat.length}`}</p>
+            <button onClick={next}>
               <BiChevronRightCircle className=" w-5 h-5" />
             </button>
           </div>

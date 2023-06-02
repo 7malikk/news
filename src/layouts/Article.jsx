@@ -3,27 +3,9 @@ import { useSelector } from 'react-redux';
 import { BsBoxArrowInUpRight } from 'react-icons/bs';
 const Article = () => {
   const { title } = useParams();
-  const {
-    general,
-    sports,
-    entertainment,
-    health,
-    business,
-    science,
-    tech,
-    searchResult,
-  } = useSelector((store) => store.articles);
-  const allArticles = [
-    ...general,
-    ...sports,
-    ...entertainment,
-    ...health,
-    ...business,
-    ...science,
-    ...tech,
-    ...searchResult,
-  ];
-  const article = allArticles.find((article) => article.title === title);
+  const { all } = useSelector((store) => store.articles);
+
+  const article = all.find((article) => article.title === title);
 
   const fallBackBcg =
     'https://images.unsplash.com/photo-1624383045192-cf512eb9d78c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80';
