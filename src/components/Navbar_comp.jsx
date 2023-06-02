@@ -40,7 +40,7 @@ const Navbar = () => {
           </div>
           <h1
             onClick={() => setIsNavOpen(false)}
-            className="text-2xl font-bold text-red-500 hover:text-white transition ease-in-out delay-150 duration-300">
+            className="text-2xl font-bold text-red-500 hover:text-black lg:hover:text-white transition ease-in-out delay-150 duration-300">
             <Link to="/"> News App</Link>
           </h1>
         </div>

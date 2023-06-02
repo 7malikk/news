@@ -20,7 +20,7 @@ const SubSection = ({ data, loading, name, error }) => {
     return <Error />;
   }
   return (
-    <div className="px-2 md:px-8  space-y-3 ">
+    <div className="px-2 md:px-8  space-y-3 h-full">
       <hr className="hidden lg:block" />
       <Link
         className="group hover:text-red-500 flex w-fit items-center space-x-3 group"
@@ -36,7 +36,7 @@ const SubSection = ({ data, loading, name, error }) => {
           <img
             src={first.urlToImage || fallBackBcg}
             alt={first.title}
-            // className="h-fit w-fit"
+            className="lg:h-56 lg:w-full"
           />
           <p className=" text-left font-bold text-xl md:text-3xl">
             {first.title}
@@ -46,10 +46,10 @@ const SubSection = ({ data, loading, name, error }) => {
           {some.map((item, idx) => {
             return (
               <Link
-                className="hover:text-black  hover:underline"
+                className="hover:text-black  hover:underline "
                 key={idx}
                 to={`/article/${item.title}`}>
-                <p className=" text-left font-semibold text-xl md:text-2xl lg:text-lg ">
+                <p className=" text-left font-semibold text-xl md:text-2xl lg:text-lg my-1 ">
                   {item.title}
                 </p>
                 <hr />

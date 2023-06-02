@@ -69,12 +69,16 @@ const Search = () => {
   const handleFilter = (e) => {
     e.preventDefault();
     if (filter === 'false') {
-      dispatch(search(mainKeyword));
-      navigate(`/search/${mainKeyword}`);
+      dispatch(search(keyword));
+      navigate(`/search/${keyword}`);
     } else {
-      dispatch(getFromSource(`${mainKeyword}&domains=${filter}`));
+      dispatch(getFromSource(`${mainKeyword}&sources=${filter}`));
     }
   };
+
+  if (isSearchError) {
+    return <Error />;
+  }
 
   return (
     <section className="p-4 md:p-8  lg:px-56 flex flex-col  space-y-6">
@@ -91,14 +95,14 @@ const Search = () => {
           <BsSearch className="absolute top-3 w-5 h-5 right-2" />
         </button>
       </form>
-      <div className="flex justify-between">
-        {searchResult.length !== 0 && (
-          <h1>
-            showig results for{' '}
-            <span className="font-semibold text-lg">{keyword}</span>
-          </h1>
-        )}
-        <form onSubmit={handleFilter} className="space-x-1  self-end">
+      <div className="flex flex-col md:flex-row justify-between ">
+        <h1>
+          showig results for{' '}
+          <span className="font-semibold text-lg">
+            {displayData && keyword}
+          </span>
+        </h1>
+        <form onSubmit={handleFilter} className="space-x-1 ">
           <label htmlFor="sources" className="text-gray-400">
             Filter source
           </label>
@@ -110,7 +114,7 @@ const Search = () => {
             <option value="false">All News App</option>
             {sources.map((source, idx) => {
               return (
-                <option key={idx} value={source.url}>
+                <option key={idx} value={source.id}>
                   {source.name}
                 </option>
               );
@@ -123,24 +127,7 @@ const Search = () => {
         <div className="w-full h-[60vh] flex justify-center items-center">
           <CgSpinnerTwo className="animate-spin w-10 h-10" />
         </div>
-      ) : searchResult.length === 0 ? (
-        <div className="w-full h-[40vh] flex flex-col justify-center md:space-y-3">
-          <p className="text-xl">
-            Your search for <span className="font-semibold ">{keyword}</span>{' '}
-            did not match any results.
-          </p>
-          <div className=" md:space-y-2">
-            <p className="font-semibold text-xl">A few suggestions:</p>
-            <ul className="list-disc list-inside text-lg font-semibold">
-              <li>Make sure all words are spelled correctly</li>
-              <li>Try different keywords</li>
-              <li>Try more general keywords</li>
-            </ul>
-          </div>
-        </div>
-      ) : isSearchError ? (
-        <Error />
-      ) : (
+      ) : displayData ? (
         <div className="space-y-2">
           {displayData?.map((item, idx) => {
             return (
@@ -171,17 +158,34 @@ const Search = () => {
           })}
           <hr />
         </div>
+      ) : (
+        <div className="w-full h-[40vh] flex flex-col justify-center md:space-y-3">
+          <p className="text-xl">
+            Your search for <span className="font-semibold ">{keyword}</span>{' '}
+            did not match any results.
+          </p>
+          <div className=" md:space-y-2">
+            <p className="font-semibold text-xl">A few suggestions:</p>
+            <ul className="list-disc list-inside text-lg font-semibold">
+              <li>Make sure all words are spelled correctly</li>
+              <li>Try different keywords</li>
+              <li>Try more general keywords</li>
+            </ul>
+          </div>
+        </div>
       )}
 
-      <div className="flex justify-center space-x-5">
-        <button onClick={prev}>
-          <BiChevronLeftCircle className=" w-5 h-5" />
-        </button>
-        <p>{`${page + 1} of ${searchResult.length}`}</p>
-        <button onClick={next}>
-          <BiChevronRightCircle className=" w-5 h-5" />
-        </button>
-      </div>
+      {displayData && (
+        <div className="flex justify-center space-x-5">
+          <button onClick={prev}>
+            <BiChevronLeftCircle className=" w-5 h-5" />
+          </button>
+          <p>{`${page + 1} of ${searchResult?.length}`}</p>
+          <button onClick={next}>
+            <BiChevronRightCircle className=" w-5 h-5" />
+          </button>
+        </div>
+      )}
     </section>
   );
 };

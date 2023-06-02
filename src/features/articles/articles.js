@@ -278,8 +278,10 @@ const articlesSlice = createSlice({
         state.isSearchLoading = true;
       })
       .addCase(search.fulfilled, (state, action) => {
-        state.searchResult = paginate(action.payload.articles);
-        state.all.push(...action.payload.articles);
+        state.searchResult = action.payload.articles
+          ? paginate(action.payload.articles)
+          : [];
+        if (action.payload.articles) state.all.push(...action.payload.articles);
         state.isSearchLoading = false;
       })
       .addCase(search.rejected, (state, action) => {
@@ -307,9 +309,11 @@ const articlesSlice = createSlice({
         state.isSearchLoading = true;
       })
       .addCase(getFromSource.fulfilled, (state, action) => {
-        state.searchResult = paginate(action.payload.articles);
-        state.all.push(...action.payload.articles);
         state.isSearchLoading = false;
+        state.searchResult = action.payload.articles
+          ? paginate(action.payload.articles)
+          : [];
+        if (action.payload.articles) state.all.push(...action.payload.articles);
       })
       .addCase(getFromSource.rejected, (state, action) => {
         console.log(action);

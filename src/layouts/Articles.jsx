@@ -168,7 +168,7 @@ const Articles = () => {
               <img
                 src={item?.urlToImage || fallBackBcg}
                 alt={item?.title}
-                // className="h-fit w-fit"
+                className="lg:h-56 lg:w-full"
               />
               <p className=" text-left font-bold text-xl md:text-3xl">
                 {item?.title}
