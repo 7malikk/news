@@ -1,4 +1,4 @@
-### News App
+# News App
 
 The News App is an all in one news web app, utilizing the [NewsApi](http://newsapi.org) to pool top headlines from multiple news outlets.
 
@@ -12,11 +12,11 @@ Visit News App [here](url)
 - Paginated category pages.
 
 ## Stretch Goals (Post MVP)
-# Web App
+### Web App
 - Sort search results by date and popularity.
 - Integrate vidoes
 
-# Development
+### Development
 - End-to-End Testing with Cypress
 - Code clean up
 
@@ -30,9 +30,10 @@ Your apikey should be formatted like so (in your `.env`);
 
 ## Steps
 1. Clone the repo
-2. `cd` --change directory into newsApp
-3. Run `npm install` using preferred CLI
-4. Run `npm run dev` 
+2.  Run `npm install` in the project directory using preferred CLI
+3.  Run `npm run dev` 
+
+Happy Hacking!
 
 ## Contributors
 [Malikk](https://github.com/7malikk)
