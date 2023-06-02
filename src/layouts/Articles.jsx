@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { CgSpinnerTwo } from 'react-icons/cg';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import Error from '../components/error_comp';
 
 const Articles = () => {
   const { category } = useParams();
@@ -23,21 +24,37 @@ const Articles = () => {
     isSportsLoading,
     isBusinessLoading,
     isTechLoading,
+    isHealthError,
+    isScienceError,
+    isEntError,
+    isSportsError,
+    isBusinessError,
+    isTechError,
   } = useSelector((store) => store.articles);
-  const cat =
-    category === 'sports'
-      ? sports
-      : category === 'entertainment'
-      ? entertainment
-      : category === 'health'
-      ? health
-      : category === 'business'
-      ? business
-      : category === 'science'
-      ? science
-      : category === 'tech'
-      ? tech
-      : general;
+  let cat;
+  switch (category) {
+    case 'sports':
+      cat = sports;
+      break;
+    case 'entertainment':
+      cat = entertainment;
+      break;
+    case 'health':
+      cat = health;
+      break;
+    case 'business':
+      cat = business;
+      break;
+    case 'science':
+      cat = science;
+      break;
+    case 'tech':
+      cat = tech;
+      break;
+    default:
+      cat = general;
+      break;
+  }
 
   const [page, setPage] = useState(0);
   const [displayData, setDisplayData] = useState([]);
@@ -98,6 +115,17 @@ const Articles = () => {
       </div>
     );
   }
+  if (
+    isHealthError ||
+    isScienceError ||
+    isEntError ||
+    isSportsError ||
+    isBusinessError ||
+    isTechError
+  ) {
+    return <Error />;
+  }
+
   return (
     <section className=" px-2 md:px-8 pb-2 md:pb-8">
       <div className="flex flex-col lg:flex-row-reverse lg:justify-between p-2 md:p-8">

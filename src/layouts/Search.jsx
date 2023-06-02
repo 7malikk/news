@@ -7,10 +7,11 @@ import { getFromSource, search } from '../features/articles/articles';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { CgSpinnerTwo } from 'react-icons/cg';
+import Error from '../components/error_comp';
 
 const Search = () => {
   const dispatch = useDispatch();
-  const { searchResult, isSearchLoading, sources } = useSelector(
+  const { searchResult, isSearchLoading, sources, isSearchError } = useSelector(
     (store) => store.articles
   );
   const navigate = useNavigate();
@@ -102,10 +103,7 @@ const Search = () => {
             Filter source
           </label>
           <select
-            onChange={(e) => {
-              console.log(e.target.value);
-              setFilter(e.target.value);
-            }}
+            onChange={(e) => setFilter(e.target.value)}
             name="sources"
             id="sources"
             className="border rounded-md py-1 px-2 outline-none hover:border-red-500 transition duration-300 delay-150 ease-in-out">
@@ -140,6 +138,8 @@ const Search = () => {
             </ul>
           </div>
         </div>
+      ) : isSearchError ? (
+        <Error />
       ) : (
         <div className="space-y-2">
           {displayData?.map((item, idx) => {

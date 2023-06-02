@@ -4,9 +4,12 @@ import 'slick-carousel/slick/slick-theme.css';
 import { useSelector } from 'react-redux';
 import { CgSpinnerTwo } from 'react-icons/cg';
 import { Link } from 'react-router-dom';
+import Error from './error_comp';
 
 const Hero = () => {
-  const { general, isLoading } = useSelector((store) => store.articles);
+  const { general, isLoading, isError } = useSelector(
+    (store) => store.articles
+  );
   const topFive = general.slice(0, 5);
 
   const settings = {
@@ -28,6 +31,9 @@ const Hero = () => {
         <CgSpinnerTwo className="animate-spin w-10 h-10" />
       </div>
     );
+  }
+  if (isError) {
+    return <Error />;
   }
 
   return (

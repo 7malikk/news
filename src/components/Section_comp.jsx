@@ -3,8 +3,9 @@
 import { Link } from 'react-router-dom';
 import { CgSpinnerTwo } from 'react-icons/cg';
 import { BsArrowRight } from 'react-icons/bs';
+import Error from './error_comp';
 
-const Section = ({ data, loading, name }) => {
+const Section = ({ data, loading, name, error }) => {
   const first = !loading && data[0][0];
   const some = !loading && data[0].slice(1, 7);
 
@@ -17,6 +18,10 @@ const Section = ({ data, loading, name }) => {
       </div>
     );
   }
+  if (error) {
+    return <Error />;
+  }
+
   return (
     <section>
       <div className="p-2 md:p-8 space-y-3">

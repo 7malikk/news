@@ -150,7 +150,6 @@ export const search = createAsyncThunk('articles/search', async (keyword) => {
 export const getFromSource = createAsyncThunk(
   'articles/getFromSource',
   async (keyword) => {
-    console.log(searchURL + keyword);
     try {
       const resp = await axios(searchURL + keyword, {
         headers: { Authorization: `Bearer ${import.meta.env.VITE_API_KEY}` },

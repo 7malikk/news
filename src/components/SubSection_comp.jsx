@@ -2,8 +2,9 @@
 import { Link } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
 import { CgSpinnerTwo } from 'react-icons/cg';
+import Error from './error_comp';
 
-const SubSection = ({ data, loading, name }) => {
+const SubSection = ({ data, loading, name, error }) => {
   const first = !loading && data[0][0];
   const some = !loading && data[0].slice(1, 7);
   const fallBackBcg =
@@ -14,6 +15,9 @@ const SubSection = ({ data, loading, name }) => {
         <CgSpinnerTwo className="animate-spin w-10 h-10" />
       </div>
     );
+  }
+  if (error) {
+    return <Error />;
   }
   return (
     <div className="px-2 md:px-8  space-y-3 ">

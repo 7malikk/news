@@ -14,9 +14,11 @@ const Navbar = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsNavOpen(false);
     if (keyword) {
       dispatch(search(keyword));
       navigate(`/search/${keyword}`);
+      setKeyword('');
     }
   };
   return (
@@ -36,7 +38,9 @@ const Navbar = () => {
               />
             )}
           </div>
-          <h1 className="text-2xl font-bold text-red-500 hover:text-white transition ease-in-out delay-150 duration-300">
+          <h1
+            onClick={() => setIsNavOpen(false)}
+            className="text-2xl font-bold text-red-500 hover:text-white transition ease-in-out delay-150 duration-300">
             <Link to="/"> News App</Link>
           </h1>
         </div>
@@ -47,22 +51,34 @@ const Navbar = () => {
               : '-translate-y-[150%] opacity-0 lg:translate-y-0 lg:opacity-100'
           }`}>
           <ul className="flex flex-col lg:flex-row space-x-0 lg:space-x-11 items-center space-y-2 p-2 lg:space-y-0 font-semibold">
-            <li className="transition ease-in-out delay-150 duration-300 hover:text-red-500">
+            <li
+              onClick={() => setIsNavOpen(false)}
+              className="transition ease-in-out delay-150 duration-300 hover:text-red-500">
               <Link to={'/business'}>Business</Link>
             </li>
-            <li className="transition ease-in-out delay-150 duration-300 hover:text-red-500">
+            <li
+              onClick={() => setIsNavOpen(false)}
+              className="transition ease-in-out delay-150 duration-300 hover:text-red-500">
               <Link to={'/health'}>Health</Link>
             </li>
-            <li className="transition ease-in-out delay-150 duration-300 hover:text-red-500">
+            <li
+              onClick={() => setIsNavOpen(false)}
+              className="transition ease-in-out delay-150 duration-300 hover:text-red-500">
               <Link to={'/science'}>Science</Link>
             </li>
-            <li className="transition ease-in-out delay-150 duration-300 hover:text-red-500">
+            <li
+              onClick={() => setIsNavOpen(false)}
+              className="transition ease-in-out delay-150 duration-300 hover:text-red-500">
               <Link to={'/sports'}>Sports</Link>
             </li>
-            <li className="transition ease-in-out delay-150 duration-300 hover:text-red-500">
+            <li
+              onClick={() => setIsNavOpen(false)}
+              className="transition ease-in-out delay-150 duration-300 hover:text-red-500">
               <Link to={'/tech'}>Technology</Link>
             </li>
-            <li className="transition ease-in-out delay-150 duration-300 hover:text-red-500">
+            <li
+              onClick={() => setIsNavOpen(false)}
+              className="transition ease-in-out delay-150 duration-300 hover:text-red-500">
               <Link to={'/entertainment'}>Entertainment</Link>
             </li>
           </ul>
