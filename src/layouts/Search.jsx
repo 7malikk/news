@@ -24,6 +24,8 @@ const Search = () => {
   useEffect(() => {
     if (isSearchLoading) return;
     setDisplayData(searchResult[page]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, isSearchLoading]);
 
   const next = () => {
@@ -50,6 +52,7 @@ const Search = () => {
   useEffect(() => {
     setMainKeyword(keyword);
   }, [keyword]);
+
   useEffect(() => {
     dispatch(search(keyword));
     navigate(`/search/${keyword}`);

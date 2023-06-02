@@ -28,148 +28,128 @@ const initialState = {
   isTechLoading: true,
   isSourcesLoading: true,
   isError: false,
+  isSearchError: false,
+  isHealthError: false,
+  isScienceError: false,
+  isEntError: false,
+  isSportsError: false,
+  isBusinessError: false,
+  isTechError: false,
 };
 
 // get general articles
 export const getAllArticles = createAsyncThunk(
   'articles/getAllArticles',
-  async (thunkAPI) => {
+  async () => {
     try {
       const resp = await axios(baseurl + 'general', {
         headers: { Authorization: `Bearer ${import.meta.env.VITE_API_KEY}` },
       });
       return resp.data;
     } catch (error) {
-      console.log(error.response.data);
-      return thunkAPI.rejectiWithValue('somehting went wrong');
+      return 'An error occured';
     }
   }
 );
 
 // get technology articles
-export const getTech = createAsyncThunk(
-  'articles/getTech',
-  async (thunkAPI) => {
-    try {
-      const resp = await axios(baseurl + 'technology', {
-        headers: { Authorization: `Bearer ${import.meta.env.VITE_API_KEY}` },
-      });
-      return resp.data;
-    } catch (error) {
-      console.log(error.response.data);
-      return thunkAPI.rejectiWithValue('somehting went wrong');
-    }
+export const getTech = createAsyncThunk('articles/getTech', async () => {
+  try {
+    const resp = await axios(baseurl + 'technology', {
+      headers: { Authorization: `Bearer ${import.meta.env.VITE_API_KEY}` },
+    });
+    return resp.data;
+  } catch (error) {
+    return 'An error occured';
   }
-);
+});
 // get science articles
-export const getScience = createAsyncThunk(
-  'articles/getScience',
-  async (thunkAPI) => {
-    try {
-      const resp = await axios(baseurl + 'science', {
-        headers: { Authorization: `Bearer ${import.meta.env.VITE_API_KEY}` },
-      });
-      return resp.data;
-    } catch (error) {
-      console.log(error.response.data);
-      return thunkAPI.rejectiWithValue('somehting went wrong');
-    }
+export const getScience = createAsyncThunk('articles/getScience', async () => {
+  try {
+    const resp = await axios(baseurl + 'science', {
+      headers: { Authorization: `Bearer ${import.meta.env.VITE_API_KEY}` },
+    });
+    return resp.data;
+  } catch (error) {
+    return 'An error occured';
   }
-);
+});
 // get sport articles
-export const getSports = createAsyncThunk(
-  'articles/getSports',
-  async (thunkAPI) => {
-    try {
-      const resp = await axios(baseurl + 'sports', {
-        headers: { Authorization: `Bearer ${import.meta.env.VITE_API_KEY}` },
-      });
-      return resp.data;
-    } catch (error) {
-      console.log(error.response.data);
-      return thunkAPI.rejectiWithValue('somehting went wrong');
-    }
+export const getSports = createAsyncThunk('articles/getSports', async () => {
+  try {
+    const resp = await axios(baseurl + 'sports', {
+      headers: { Authorization: `Bearer ${import.meta.env.VITE_API_KEY}` },
+    });
+    return resp.data;
+  } catch (error) {
+    return 'An error occured';
   }
-);
+});
 // get entertainment articles
-export const getEnt = createAsyncThunk('articles/getEnt', async (thunkAPI) => {
+export const getEnt = createAsyncThunk('articles/getEnt', async () => {
   try {
     const resp = await axios(baseurl + 'entertainment', {
       headers: { Authorization: `Bearer ${import.meta.env.VITE_API_KEY}` },
     });
     return resp.data;
   } catch (error) {
-    console.log(error.response.data);
-    return thunkAPI.rejectiWithValue('somehting went wrong');
+    return 'An error occured';
   }
 });
 // get health articles
-export const getHealth = createAsyncThunk(
-  'articles/getHealth',
-  async (thunkAPI) => {
-    try {
-      const resp = await axios(baseurl + 'health', {
-        headers: { Authorization: `Bearer ${import.meta.env.VITE_API_KEY}` },
-      });
-      return resp.data;
-    } catch (error) {
-      console.log(error.response.data);
-      return thunkAPI.rejectiWithValue('somehting went wrong');
-    }
+export const getHealth = createAsyncThunk('articles/getHealth', async () => {
+  try {
+    const resp = await axios(baseurl + 'health', {
+      headers: { Authorization: `Bearer ${import.meta.env.VITE_API_KEY}` },
+    });
+    return resp.data;
+  } catch (error) {
+    return 'An error occured';
   }
-);
+});
 
 // get business articles
 export const getBusiness = createAsyncThunk(
   'articles/getBusiness',
-  async (thunkAPI) => {
+  async () => {
     try {
       const resp = await axios(baseurl + 'business', {
         headers: { Authorization: `Bearer ${import.meta.env.VITE_API_KEY}` },
       });
       return resp.data;
     } catch (error) {
-      console.log(error.response.data);
-      return thunkAPI.rejectiWithValue('somehting went wrong');
+      return 'An error occured';
     }
   }
 );
 
 // get all sources provisioned by the API
-export const getSources = createAsyncThunk(
-  'articles/getSources',
-  async (thunkAPI) => {
-    try {
-      const resp = await axios(sourcesUrl, {
-        headers: { Authorization: `Bearer ${import.meta.env.VITE_API_KEY}` },
-      });
-      return resp.data;
-    } catch (error) {
-      console.log(error.response.data);
-      return thunkAPI.rejectiWithValue('somehting went wrong');
-    }
+export const getSources = createAsyncThunk('articles/getSources', async () => {
+  try {
+    const resp = await axios(sourcesUrl, {
+      headers: { Authorization: `Bearer ${import.meta.env.VITE_API_KEY}` },
+    });
+    return resp.data;
+  } catch (error) {
+    return 'An error occured';
   }
-);
+});
 
 // search function
-export const search = createAsyncThunk(
-  'articles/search',
-  async (keyword, thunkAPI) => {
-    try {
-      const resp = await axios(searchURL + keyword, {
-        headers: { Authorization: `Bearer ${import.meta.env.VITE_API_KEY}` },
-      });
-      return resp.data;
-    } catch (error) {
-      console.log(error.response.data);
-      return thunkAPI.rejectiWithValue('somehting went wrong');
-    }
+export const search = createAsyncThunk('articles/search', async (keyword) => {
+  try {
+    const resp = await axios(searchURL + keyword, {
+      headers: { Authorization: `Bearer ${import.meta.env.VITE_API_KEY}` },
+    });
+    return resp.data;
+  } catch (error) {
+    return 'An error occured';
   }
-);
+});
 // function to filter based on selected source
 export const getFromSource = createAsyncThunk(
   'articles/getFromSource',
-  async (keyword, thunkAPI) => {
+  async (keyword) => {
     console.log(searchURL + keyword);
     try {
       const resp = await axios(searchURL + keyword, {
@@ -177,8 +157,7 @@ export const getFromSource = createAsyncThunk(
       });
       return resp.data;
     } catch (error) {
-      console.log(error.response.data);
-      return thunkAPI.rejectiWithValue('somehting went wrong');
+      return 'An error occured';
     }
   }
 );
@@ -216,7 +195,7 @@ const articlesSlice = createSlice({
       .addCase(getTech.rejected, (state, action) => {
         console.log(action);
         state.isTechLoading = false;
-        state.isError = true;
+        state.isTechError = true;
       });
     // science
     builder
@@ -231,7 +210,7 @@ const articlesSlice = createSlice({
       .addCase(getScience.rejected, (state, action) => {
         console.log(action);
         state.isScienceLoading = false;
-        state.isError = true;
+        state.isScienceError = true;
       });
     // business
     builder
@@ -246,7 +225,7 @@ const articlesSlice = createSlice({
       .addCase(getBusiness.rejected, (state, action) => {
         console.log(action);
         state.isBusinessLoading = false;
-        state.isError = true;
+        state.isBusinessError = true;
       });
     // health
     builder
@@ -261,7 +240,7 @@ const articlesSlice = createSlice({
       .addCase(getHealth.rejected, (state, action) => {
         console.log(action);
         state.isHealthLoading = false;
-        state.isError = true;
+        state.isHealthError = true;
       });
 
     // sports
@@ -277,7 +256,7 @@ const articlesSlice = createSlice({
       .addCase(getSports.rejected, (state, action) => {
         console.log(action);
         state.isSportsLoading = false;
-        state.isError = true;
+        state.isSportsError = true;
       });
     // entertainment
     builder
@@ -292,7 +271,7 @@ const articlesSlice = createSlice({
       .addCase(getEnt.rejected, (state, action) => {
         console.log(action);
         state.isEntLoading = false;
-        state.isError = true;
+        state.isEntError = true;
       });
     // search
     builder
@@ -307,7 +286,7 @@ const articlesSlice = createSlice({
       .addCase(search.rejected, (state, action) => {
         console.log(action);
         state.isSearchLoading = false;
-        state.isError = true;
+        state.isSearchError = true;
       });
     // get all sources (to be inserted into the dropdown)
     builder
@@ -336,7 +315,7 @@ const articlesSlice = createSlice({
       .addCase(getFromSource.rejected, (state, action) => {
         console.log(action);
         state.isSearchLoading = false;
-        state.isError = true;
+        state.isSearchError = true;
       });
   },
 });

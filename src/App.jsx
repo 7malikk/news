@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { Home, Articles, Article, Search, Video } from './layouts';
+import { Home, Articles, Article, Search } from './layouts';
 import { Footer, Navbar } from './components';
 import { useEffect } from 'react';
 import {
@@ -34,7 +34,6 @@ function App() {
         <Route path="/:category" element={<Articles />} />
         <Route path="/article/:title" element={<Article />} />
         <Route path="/search/:keyword" element={<Search />} />
-        <Route path="/video/:id" element={<Video />} />
         <Route path="*" element={<Home />} />
       </Routes>
       <Footer />

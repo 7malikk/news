@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 const Footer = () => {
   return (
     <>
-      <footer className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  space-y-4 lg:space-y-0 lg:space-x-8 p-2 md:p-8 bg-black text-white">
-        <div className="space-y-8 text-center  flex justify-center flex-col items-center lg:items-start">
+      <footer className=" flex  items-center lg:items-start justify-between flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-8 p-2 md:p-8 bg-black text-white">
+        <div className="space-y-8 text-center  flex justify-center flex-col items-center lg:items-start md:w-1/2 lg:w-1/4">
           <Link to={'/'}>
             <h1 className="text-3xl md:text-5xl font-bold text-red-500 hover:text-white transition ease-in-out delay-150 duration-300 ">
               News App
